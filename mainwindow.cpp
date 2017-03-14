@@ -72,6 +72,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSerialPort = new QSerialPort(this);
 
+    //edits by mike
+    //initialize status check value to false.
+    exportRecordStatusCheck = false;
+    //stopedits
+
     mTimer = new QTimer(this);
     mTimer->setInterval(20);
     mTimer->start();
@@ -1425,6 +1430,15 @@ void MainWindow::mcValuesReceived(MC_VALUES values)
 
     ui->rtDataWidget->setValues(values);
 
+    //edits by mike
+    //Write data to file before it hits the FIFO buffer assuming the button was pressed
+    if(exportRecordStatusCheck==true)
+    {
+        dataExport.writeFile(values);
+    }
+    //stopedit
+
+    //values get loaded into FIFO Buffers HERE
     appendDoubleAndTrunc(&tempMos1Vec, values.temp_mos1, maxS);
     appendDoubleAndTrunc(&tempMos2Vec, values.temp_mos2, maxS);
     appendDoubleAndTrunc(&tempMos3Vec, values.temp_mos3, maxS);
@@ -2834,4 +2848,24 @@ void MainWindow::on_mcconfFocMeasureHallApplyButton_clicked()
 void MainWindow::on_refreshButton_clicked()
 {
     refreshSerialDevices();
+}
+
+//receiver for when the export data button is pressed
+//connection handled by QT
+void MainWindow::on_exportDataButton_clicked()
+{
+    if(exportRecordStatusCheck==true)
+    {
+        exportRecordStatusCheck=false;//set status check to false
+        ui->exportRecordStatus->setText("Recording Inactive"); // set status check label to not recording
+        dataExport.closeFile();//close the file
+    }
+    else if(exportRecordStatusCheck==false)
+    {
+        exportRecordStatusCheck=true; //set status check to true
+        dataExport.openFile("dataExportRecord.csv"); //open the file
+        QString tempHeader = "test"; // not needed just relic of testing DON'T REMOVE
+        dataExport.setUpFile(tempHeader); ///set the headers up in the file
+        ui->exportRecordStatus->setText("Recording Active");// set the status label so we know we're recording
+    }
 }

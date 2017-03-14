@@ -28,6 +28,7 @@
 #include "packetinterface.h"
 #include "serialization.h"
 #include "datatypes.h"
+#include "bldcdataexport.h"
 
 namespace Ui {
 class MainWindow;
@@ -131,7 +132,14 @@ private slots:
     void on_mcconfFocMeasureHallApplyButton_clicked();
     void on_refreshButton_clicked();
 
+    //Edits by mike
+    void on_exportDataButton_clicked();
+    //stopedits
 private:
+    //edits by mike
+    bool exportRecordStatusCheck;
+    BLDCDataExport dataExport;
+    //stopedits
     Ui::MainWindow *ui;
     QSerialPort *mSerialPort;
     QTimer *mTimer;
