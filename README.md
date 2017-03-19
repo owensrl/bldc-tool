@@ -1,6 +1,6 @@
-This is a modified version of the BLDC tool to support data logging to CSV file. Original repo by vedderb can be found here: https://github.com/vedderb/bldc-tool
+This is a modified version of the BLDC tool to support data logging to CSV file. Original project by vedderb can be found here: https://github.com/vedderb/bldc-tool
 
-To begin a logging session, click the Start/Stop Record button just below the CAN Fwd box. Data will be written continuously to dataExportRecord.csv, in the same folder as your BLDC tool application, until the Start/Stop button is clicked again. Currently, data can only be written to this single file path. Once logging is complete, rename or copy the file to another directory before beginning a new logging session.
+To begin a logging session, type the desired name of the CSV file in the "Export File Name" box, and click the Start/Stop Record button. Data will be written continuously to "exportfilename".csv, in the CSVData folder of your BLDC tool directory, until the Start/Stop button is clicked again. If the user input "Export File Name" does not already exist in the CSVData folder, it will be created automatically.
 
 BLDC tool is a Qt gui to control and debug the custom BLDC controller created by vedderb. A complete description and tutorial about how to use it can be found here: http://vedder.se/2015/01/vesc-open-source-esc/
 

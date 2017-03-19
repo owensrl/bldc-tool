@@ -2858,14 +2858,16 @@ void MainWindow::on_exportDataButton_clicked()
     {
         exportRecordStatusCheck=false;//set status check to false
         ui->exportRecordStatus->setText("Recording Inactive"); // set status check label to not recording
+		ui->exportRecordStatus->setStyleSheet(QStringLiteral("QLabel{color: rgb(170,0,0);}"));
         dataExport.closeFile();//close the file
     }
     else if(exportRecordStatusCheck==false)
     {
         exportRecordStatusCheck=true; //set status check to true
-        dataExport.openFile("dataExportRecord.csv"); //open the file
+        dataExport.openFile(ui->exportDataFileNameLE->text()); //open the file
         QString tempHeader = "test"; // not needed just relic of testing DON'T REMOVE
         dataExport.setUpFile(tempHeader); ///set the headers up in the file
         ui->exportRecordStatus->setText("Recording Active");// set the status label so we know we're recording
+		ui->exportRecordStatus->setStyleSheet(QStringLiteral("QLabel{color: rgb(0,170,0);}"));
     }
 }

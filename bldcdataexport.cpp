@@ -2,13 +2,17 @@
 
 BLDCDataExport::BLDCDataExport()
 {
-
+    folderName="CSVData";
 }
 
 
 void::BLDCDataExport::openFile(QString fileName)
 {
-    csvFile = new QFile(fileName);//initialize file object
+    if(QDir(folderName).exists() ==false) //checks if the folder exists
+    {
+        QDir().mkdir(folderName); // creates the folder if it does not exist
+    }
+    csvFile = new QFile(folderName+"//"+fileName+".csv");//initialize file object
     if(csvFile->open(QIODevice::WriteOnly|QFile::Truncate))
     {
         csvFileStream = new QTextStream(csvFile);//initialize filestream object
@@ -17,6 +21,7 @@ void::BLDCDataExport::openFile(QString fileName)
 
 void::BLDCDataExport::setUpFile(QString header)
 {
+    Q_UNUSED(header);
     *csvFileStream<<"Temp Mos,Temp Mos 2,Temp Mos 3,Temp Mos 4,Temp Mos 5,Temp Mos 6,Temp PCB,Current In,Motor Current,Duty,RPM ,Voltage in\n";
     csvFileStream->flush(); // YOU MUST FLUSH THE FILESTREAM OBJECT TO FLUSH THE BUFFER OR IT WILL NOT PRINT TO THE FILE
 }

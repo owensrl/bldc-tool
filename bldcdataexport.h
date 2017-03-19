@@ -4,6 +4,8 @@
 #include "datatypes.h"
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
+
 class BLDCDataExport
 {
 public:
@@ -15,6 +17,7 @@ public:
 private:
     QFile *csvFile;
     QTextStream *csvFileStream;
+    QString folderName;
 };
 
 #endif // BLDCDATAEXPORT_H
